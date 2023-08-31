@@ -43,10 +43,10 @@ test {
     systemProperty 'userName', project.findProperty('userName') ?: 'standard_user'
     systemProperty 'userPassword', project.findProperty('userPassword') ?: 'secret_sauce'
 
-
-
     systemProperty 'lockedOutUserName', project.findProperty('lockedOutUserName') ?: 'locked_out_user'
     systemProperty 'lockedOutUserPassword', project.findProperty('lockedOutUserPassword') ?: 'secret_sauce'
+
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
 
 
 
