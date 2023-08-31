@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.9.3'
+    id "io.freefair.lombok" version "8.3"
+
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    allureVersion = '2.22.0'
+    junitVersion = '5.9.3'
+}
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    testImplementation('com.codeborne:selenide:6.17.2')
+    testImplementation("io.qameta.allure:allure-selenide:${allureVersion}")
+    testImplementation('org.slf4j:slf4j-simple:2.0.7')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+
+
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperty 'userName', project.findProperty('userName') ?: 'standard_user'
+    systemProperty 'userPassword', project.findProperty('userPassword') ?: 'secret_sauce'
+
+
+
+    systemProperty 'lockedOutUserName', project.findProperty('lockedOutUserName') ?: 'locked_out_user'
+    systemProperty 'lockedOutUserPassword', project.findProperty('lockedOutUserPassword') ?: 'secret_sauce'
+
+
+
+}
+allure {
+    autoconfigure = true
+    version = "${allureVersion}"
+
+    useJUnit5 {
+        version = "${allureVersion}"
+    }
+}
